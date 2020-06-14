@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'indeedCrawler.spiders'
 #USER_AGENT = 'indeedCrawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -55,6 +55,10 @@ ROBOTSTXT_OBEY = True
 #DOWNLOADER_MIDDLEWARES = {
 #    'indeedCrawler.middlewares.IndeedcrawlerDownloaderMiddleware': 543,
 #}
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -64,9 +68,12 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'indeedCrawler.pipelines.IndeedcrawlerPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'indeedCrawler.pipelines.IndeedcrawlerPipeline': 300,
+    'indeedCrawler.pipelines.MongoPipeline': 500
+}
+MONGO_URI = 'mongodb://localhost:27017/'
+MONGO_DATABASE = 'jobs'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
