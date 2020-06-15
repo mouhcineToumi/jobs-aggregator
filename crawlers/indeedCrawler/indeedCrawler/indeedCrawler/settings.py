@@ -55,10 +55,10 @@ ROBOTSTXT_OBEY = False
 #DOWNLOADER_MIDDLEWARES = {
 #    'indeedCrawler.middlewares.IndeedcrawlerDownloaderMiddleware': 543,
 #}
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
-}
+#DOWNLOADER_MIDDLEWARES = {
+#    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+#    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+#}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -70,7 +70,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'indeedCrawler.pipelines.IndeedcrawlerPipeline': 300,
-    'indeedCrawler.pipelines.MongoPipeline': 500
+#    'indeedCrawler.pipelines.MongoPipeline': 500
 }
 MONGO_URI = 'mongodb://localhost:27017/'
 MONGO_DATABASE = 'jobs'

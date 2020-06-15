@@ -9,19 +9,18 @@ class IndeedSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'https://www.hespress.com/politique/index.'+str(p)+'.html'
-            for p in range(1, 2)
+            'https://ma.indeed.com/jobs?q=%22d%C3%A9veloppeur%22&sort=date'
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        items = response.css('.category_headline h1 a ::attr(href)').extract() + response.css('.short h2 a::attr(href)').extract()
+        items = response.css('.jobsearch-SerpJobCard h2 a::attr(href)').extract()
 
         for item in items:
             yield {
-                'url': "https://www.hespress.com"+item,
-                'id': item.strip('/').strip('.html').replace('/', '_')
+                'url': "https://ma.indeed.com"+item,
+                'id': item.replace('/rc/clk?jk=', '').replace('&vjs=3', '').replace('&fccid=', '_')
             }
 
 
@@ -32,16 +31,17 @@ class IndeedDetailsSpider(scrapy.Spider):
     def start_requests(self):
 
         self.start_urls = [
-                            'https://www.hespress.com/politique/474621.html'
+                            'https://www.indeed.com/rc/clk?jk=aae2e94e1afa6e83&fccid=dd616958bd9ddc12&vjs=3',
+                            'https://www.indeed.com/rc/clk?jk=84dcdf06141e0df1&fccid=8ae7f42a9b7285b6&vjs=3'
                         ]
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         item = {}
-        item['articleId'] = response.url.replace('https://www.hespress.com/', '').strip('.html').replace('/', '_')
-        item['title'] = response.css('#article_holder .page_title ::text').extract()[0]
-        item['author'] = response.css('#article_holder .story_author ::text').extract()[0]
-        item['date'] = ' '.join(response.css('#article_holder .story_stamp ::text').extract())
-        item['content'] = ' '.join(response.css('#article_holder p ::text').extract())
-        yield {'details': item}
+        item['title'] = response.css('.jobsearch-JobInfoHeader-title ::text').extract()[0]
+        item['source'] = ' '.join(response.css('.jobsearch-InlineCompanyRating ::text').extract())
+        item['description'] = ' '.join(response.css('#jobDescriptionText ::text').extract())
+        item['date'] = response.css('.jobsearch-JobMetadataFooter ::text').extract()[1]
+
+        yield {'details': item }
