@@ -22,12 +22,15 @@ class IndeedSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        items = response.css('.jobsearch-SerpJobCard h2 a::attr(href)').extract()
+        items = response.css('.jobsearch-SerpJobCard')
         for item in items:
-            r = {
-                'url': "https://ma.indeed.com"+item,
-                'id': item.replace('/rc/clk?jk=', '').replace('&vjs=3', '').replace('&fccid=', '_')
-            }
+            r = {}
+            r['url'] = "https://ma.indeed.com" + item.css('h2 a::attr(href)').extract()[0]
+            r['id'] = r['url'].split('/')[-1].replace('clk?jk=', '').replace('&vjs=3', '').replace('&fccid=', '_').replace('?fccid=', '_')
+            r['company'] = ' '.join(item.css('.company ::text').extract()).strip()
+            r['location'] = ' '.join(item.css('.location ::text').extract()).strip()
+            r['date'] = ' '.join(item.css('.date ::text').extract()).strip()
+
             if r['id'].startswith('/pagead'):
                 continue
             yield r
@@ -45,8 +48,5 @@ class IndeedDetailsSpider(scrapy.Spider):
         item = {}
         item['url'] = response.request.meta['redirect_urls'][0]
         item['title'] = response.css('.jobsearch-JobInfoHeader-title ::text').extract()[0]
-        item['source'] = ' '.join(response.css('.jobsearch-InlineCompanyRating ::text').extract())
         item['description'] = ' '.join(response.css('#jobDescriptionText ::text').extract())
-        item['date'] = response.css('.jobsearch-JobMetadataFooter ::text').extract()[1].strip(' - ')
-
         yield {'details': item }
