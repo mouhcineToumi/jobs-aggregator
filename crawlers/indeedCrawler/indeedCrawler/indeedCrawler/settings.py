@@ -70,7 +70,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'indeedCrawler.pipelines.IndeedcrawlerPipeline': 300,
-#    'indeedCrawler.pipelines.MongoPipeline': 500
+    'indeedCrawler.pipelines.MongoPipeline': 500
 }
 MONGO_URI = 'mongodb://localhost:27017/'
 MONGO_DATABASE = 'jobs'

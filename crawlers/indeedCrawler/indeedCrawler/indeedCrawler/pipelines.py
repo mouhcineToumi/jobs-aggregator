@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-#import pymongo
+import pymongo
 
 class IndeedcrawlerPipeline:
     def process_item(self, item, spider):
@@ -31,8 +31,7 @@ class MongoPipeline:
         self.db = self.client[self.mongo_db]
 
         if spider.name == 'indeed-details':
-            spider.start_urls = [x['url'] for x in list(self.db[self.collection_name].find({'title': {"$exists": False}}, {'url': 1}))]
-
+            spider.start_urls = [ x['url'] for x in list(self.db[self.collection_name].find({'title': {"$exists": False}})) ]
 
     def close_spider(self, spider):
         self.client.close()
@@ -44,5 +43,5 @@ class MongoPipeline:
             return item
 
         if spider.name == 'indeed-details':
-            self.db[self.collection_name].update_one({'id': item.get('details').get('articleId')}, {'$set': item.get('details')})
+            self.db[self.collection_name].update_one({'url': item.get('details').get('url')}, {'$set': item.get('details')})
             return item

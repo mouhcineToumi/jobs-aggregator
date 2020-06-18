@@ -38,19 +38,15 @@ class IndeedDetailsSpider(scrapy.Spider):
     name = "indeed-details"
 
     def start_requests(self):
-
-        self.start_urls = [
-                            'https://www.indeed.com/rc/clk?jk=aae2e94e1afa6e83&fccid=dd616958bd9ddc12&vjs=3',
-                            'https://www.indeed.com/rc/clk?jk=84dcdf06141e0df1&fccid=8ae7f42a9b7285b6&vjs=3'
-                        ]
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         item = {}
+        item['url'] = response.request.meta['redirect_urls'][0]
         item['title'] = response.css('.jobsearch-JobInfoHeader-title ::text').extract()[0]
         item['source'] = ' '.join(response.css('.jobsearch-InlineCompanyRating ::text').extract())
         item['description'] = ' '.join(response.css('#jobDescriptionText ::text').extract())
-        item['date'] = response.css('.jobsearch-JobMetadataFooter ::text').extract()[1]
+        item['date'] = response.css('.jobsearch-JobMetadataFooter ::text').extract()[1].strip(' - ')
 
         yield {'details': item }
