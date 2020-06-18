@@ -1,27 +1,36 @@
 import scrapy
 
 
+def url_builder(term, age=14):
+    url = "https://ma.indeed.com/jobs?q=%22" + term + "%22&sort=date&fromage=" + str(age)
+    return url
+
 
 
 class IndeedSpider(scrapy.Spider):
     name = "indeed"
     pages = 1
 
+
+
     def start_requests(self):
         urls = [
-            'https://ma.indeed.com/jobs?q=%22d%C3%A9veloppeur%22&sort=date'
+            url_builder('développeur', 14),
+            url_builder('software', 14)
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         items = response.css('.jobsearch-SerpJobCard h2 a::attr(href)').extract()
-
         for item in items:
-            yield {
+            r = {
                 'url': "https://ma.indeed.com"+item,
                 'id': item.replace('/rc/clk?jk=', '').replace('&vjs=3', '').replace('&fccid=', '_')
             }
+            if r['id'].startswith('/pagead'):
+                continue
+            yield r
 
 
 class IndeedDetailsSpider(scrapy.Spider):
