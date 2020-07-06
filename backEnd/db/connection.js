@@ -3,7 +3,7 @@
 // mongodb driver
 const MongoClient = require("mongodb").MongoClient;
 
-const dbConnectionUrl = "mongodb://localhost:27017";
+const dbConnectionUrl = "mongodb+srv://AymenSadak:AqWZsX123@cluster0.afzup.mongodb.net";
 
 function initialize(
     dbName,
