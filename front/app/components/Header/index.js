@@ -36,7 +36,29 @@ function Header({ search, setSearch }) {
   const useStyles = makeStyles(theme => ({
     Filter: {
       margin: 10,
-      width: 200,
+      width: '30%',
+      '@media(max-width: 700px)': {
+        width: '45%',
+      },
+      '@media(max-width: 450px)': {
+        width: '100%',
+      },
+    },
+    Titlefilter: {
+      margin: 10,
+      marginBottom: 0,
+    },
+    Divfilter: {
+      margin: 10,
+      marginTop: 0,
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+    },
+    FilterTitle: {
+      color: '#1C3153',
+      fontSize: 14,
+      textTransform: 'uppercase',
     },
     root: {
       padding: '2px 4px',
@@ -67,6 +89,7 @@ function Header({ search, setSearch }) {
   }));
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [ShowFilter, setShowFilter] = React.useState(false);
   const [location, setLocation] = React.useState('');
 
   const handleChange = event => {
@@ -86,11 +109,20 @@ function Header({ search, setSearch }) {
     }
     setOpen(bool);
   };
+
+  const openFilter = () => {
+    if (ShowFilter) {
+      setShowFilter(false);
+    }
+    if (!ShowFilter) {
+      setShowFilter(true);
+    }
+  };
   return (
     <div>
       <Paper component="form" className={classes.root}>
         <IconButton className={classes.iconButton} aria-label="menu">
-          <MenuIcon onClick={openDrewer(true)} />
+          <MenuIcon onClick={() => openFilter()} />
         </IconButton>
         <InputBase
           value={search}
@@ -99,14 +131,7 @@ function Header({ search, setSearch }) {
           onChange={handleChange}
           inputProps={{ 'aria-label': 'search' }}
         />
-        <IconButton
-          type="submit"
-          className={classes.iconButton}
-          aria-label="search"
-        >
-          <SearchIcon />
-        </IconButton>
-        <Modal
+        {/*<Modal
           open={open}
           onClose={openDrewer(false)}
           className={classes.modal}
@@ -124,8 +149,8 @@ function Header({ search, setSearch }) {
               size="small"
             />
           </div>
-        </Modal>
-        <Drawer anchor="left" open={false}>
+        </Modal>*/}
+        {/*<Drawer anchor="left" open={false}>
           <TextField
             className={classes.Filter}
             id="outlined-basic"
@@ -134,66 +159,25 @@ function Header({ search, setSearch }) {
             variant="outlined"
             size="small"
           />
-          {/*<FormControl
-            className={classes.Filter}
-            variant="outlined"
-            size="small"
-          >
-            <InputLabel id="demo-simple-select-outlined-label">
-              Contrat
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
-              value={contrat}
-              onChange={handleChange3}
-              label="Contrat"
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="CDI">CDI</MenuItem>
-              <MenuItem value="Stage">Stage</MenuItem>
-            </Select>
-          </FormControl>
-          <Autocomplete
-            size="small"
-            className={classes.Filter}
-            value={profession}
-            onChange={(event, newValue) => {
-              setProfession(newValue);
-            }}
-            inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={ListProfession}
-            renderInput={params => (
-              <TextField {...params} label="Professions" variant="outlined" />
-            )}
-          />*/}
-        </Drawer>
+        </Drawer>*/}
       </Paper>
-      {/*<FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="demo-simple-select-outlined-label">
-          Professions
-        </InputLabel>
-        <Select
-          labelId="demo-simple-select-outlined-label"
-          id="demo-simple-select-outlined"
-          value={profession}
-          onChange={handleChange4}
-          label="Professions"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        </FormControl>*/}
+      {ShowFilter && (
+        <div className={classes.Allfilter}>
+          <div className={classes.Titlefilter}>
+            <p className={classes.FilterTitle}>Mes Filters :</p>
+          </div>
+          <div className={classes.Divfilter}>
+            <TextField
+              className={classes.Filter}
+              id="outlined-basic"
+              onChange={handleChange2}
+              label="Location"
+              variant="outlined"
+              size="small"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

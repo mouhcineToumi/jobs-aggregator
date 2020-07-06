@@ -32,31 +32,35 @@ import { fetchListJobs } from './actions';
 const jobstest = [
   {
     _id: {
-      $oid: '5eeb1fb93c4428936366caaf',
+      $oid: '5efe3bc4cab55066c34d3a95',
     },
     url:
-      'https://ma.indeed.com/rc/clk?jk=f2d08261ef9fa2ef&fccid=c345b06b9f22e507&vjs=3',
-    id: 'f2d08261ef9fa2ef_c345b06b9f22e507',
-    company: 'discover our recruitment process',
-    location: 'Salé',
-    date: "24/06/2020",
+      'https://ma.indeed.com/rc/clk?jk=c78a272c52cc8b76&fccid=dd616958bd9ddc12&vjs=3',
+    id: 'c78a272c52cc8b76_dd616958bd9ddc12',
+    company: '',
+    location: 'Casablanca',
+    date: {
+      $date: '2020-07-02T20:55:48.727Z',
+    },
     description:
-      "Au sein d’une équipe projet fonctionnant en mode collaboratif et Agile scrum, Kanban, X Programing, vous serez l’un des développeurs, travaillant en coordination avec le Product-Owner, le Scrum Master, Software analyst, et équipes partenaires. \nDans ce contexte Agile, vous effectuerez différentes tâches : \n L’estimation du niveau d’effort de développement des User stories \n La définition des spécifications détaillées à partir des User stories \n Le développement selon une architecture logicielle établie \n la conduite des tests unitaires et d’intégration 2 à 2 \n Le développement des outillages de test associés \n L’automatisation et l’industrialisation des opérations régulières (process de build, les tests, les audits de qualité de code, la containerisation du code, …) \n La préparation des packages de livraison (mode devops) \n Vous assurez le support technique et la maintenance corrective et adaptative des éléments délivrés \n Vous animer l’équipe de développeurs \nVous êtes en relation avec le Product Owner pour gérer le backlog et définir les US \n about you\n Vous avez une formation Bac+5 Ingénieur/Master 2 en développement logiciel. \n Vous avez de 5 à 8 ans d'expérience de développement avec Java/JEE et les frameworks Spring / Hibernate, Junit/Mockito, Maven, Angular \n Vous pratiquez les architectures micro services, les environnements XaaS, et vous savez créer des composants (REST pour les API) réutilisables \n Vous savez présenter une solution disruptive, argumenter et convaincre \n Vous adhérez aux valeurs de l'agilité, et vous maitrisez les outils de gestion agiles et collaboratifs tels que Jira / Confluence. \n Vous avez une forte appétence pour le travail en équipe et une bonne aisance relationnelle \n Vous savez écouter le client et ses utilisateurs, et traduire ses besoins en exigences ou propositions de solution à travers une architecture logicielle adaptée \n Vos connaissances dans le domaine des réseaux et Télécom seront très appréciées \n \n additional information \n \n department\n Customer Marketing& Innovation \n \n contract\n Regular",
-    title: 'Software Engineer',
+      "youssef DÉVELOPPEUR WEB \n Casablanca \n Publiée le: 2 Jul-11:29 \n Vue: 28 \n Annonce N°: 8330209\n Nous sommes une société de la distribution des offres et services de téléphonie mobile, travaille en partenariat avec orange et nous sommes à la recherche d'un développeur web à casablanca \nprofil demandébac+2 ou plus en développement informatique \ndéveloppement web php..base de donnée : mysql, pgsql, \nenvoyez votre cv.\n Domaine : Informatique / Multimédia / Internet \n Fonction : Informatique - Développement \n Type de contrat : A discuter \n Nom de la société : FIRST TELECOM \n Salaire : A discuter \n Niveau d'études : Bac plus 2",
+    title: 'DÉveloppeur web',
   },
   {
     _id: {
-      $oid: '5eeb1fb93c4428936366cab0',
+      $oid: '5efe3bc4cab55066c34d3a96',
     },
     url:
-      'https://ma.indeed.com/rc/clk?jk=c1f634088b6cdedf&fccid=cfbbc86861e56bf6&vjs=3',
-    id: 'c1f634088b6cdedf_cfbbc86861e56bf6',
-    company: 'Oritech',
+      'https://ma.indeed.com/rc/clk?jk=da92d2f3a6248d84&fccid=8c086c865fe18da4&vjs=3',
+    id: 'da92d2f3a6248d84_8c086c865fe18da4',
+    company: 'KECHWEB',
     location: 'Casablanca',
-    date: "Publiée à l'instant",
+    date: {
+      $date: '2020-07-02T20:55:48.866Z',
+    },
     description:
-      "Dans le cadre de notre développement, nous recherchons un développeur Full Stack en stage de pré-embauche. \n Department:  Software Engineering \n Project Location(s):  Casablanca, Maroc \n Education:  Diplôme d'ingénieur \nMissions \n \nVous aurez l’opportunité d’intervenir sur les différentes étapes du cycle de vie d’un projet de sa phase de conception à sa mise en production. Vos missions principales seront : \n \n Participation à la définition des spécifications techniques du projet ; \n Conception de l’architecture de l’application ; \n Développement de l’application en Java (Back-end et Front-end) ; \n Mise en place des tests unitaires, d’intégration, de performance et de montée en charge ; \n Rédaction de la documentation fonctionnelle et technique du produit. \n Profil Recherché \n \nVous êtes diplômé d’une école d’ingénieur et vous justifiez d’un socle technique solide acquis à travers vos études et vos stages ; Curieux et passionné des nouvelles technologies, vous avez le sens du service et êtes sensible aux processus d’ingénierie et de qualité logicie \n \nCompétences requises : \n Spring Framework (en particulier Spring MVC), Hibernate/JPA, Maven ; \n Serveurs d’application (Tomcat) et bases de données relationnelles (MySQL) ; \n HTML 5, CSS 3, Javascript. \n La connaissance de jQuery et d’AngularJS ou d’un framework MVC équivalent sera fortement appréciée.",
-    title: 'Full Stack Developer',
+      'Kechweb est une société de divers travaux informatiques (développement informatique etc...). elle est composée de jeunes spécialistes en informatique dynamiques, persévérants et enthousiastes pour concevoir, développer et réaliser les objectifs des clients. on cherche un développeur web très motivant pour le poste : développeur web maîtrise parfaitement le développement des plugins, thèmes, modules pour cms (wordpress, joomla, prestashop, dolibarr).',
+    title: 'Développeur web',
   },
 ];
 

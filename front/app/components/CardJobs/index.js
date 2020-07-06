@@ -65,6 +65,7 @@ const useStyles = makeStyles(theme => ({
 }));
 function CardJobs({ job }) {
   const classes = useStyles();
+  const date = new Date(job.date.$date);
   return (
     <a className={classes.a} href={job.url}>
       <Card style={{ marginBottom: 20 }}>
@@ -84,7 +85,13 @@ function CardJobs({ job }) {
                 </Typography>
                 <Typography className={classes.li}>
                   <QueryBuilderIcon style={{ fontSize: 18 }} />
-                  <span>{job.date}</span>
+                  <span>
+                    {new Intl.DateTimeFormat('en-GB', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: '2-digit',
+                    }).format(date)}
+                  </span>
                 </Typography>
               </div>
               <div />
