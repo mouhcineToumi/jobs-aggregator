@@ -16,6 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+import moment from 'moment';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -65,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 }));
 function CardJobs({ job }) {
   const classes = useStyles();
-  const date = new Date(job.date.$date);
+  const date = moment(job.date).format('DD-MM-YYYY');
   return (
     <a className={classes.a} href={job.url}>
       <Card style={{ marginBottom: 20 }}>
@@ -85,13 +86,7 @@ function CardJobs({ job }) {
                 </Typography>
                 <Typography className={classes.li}>
                   <QueryBuilderIcon style={{ fontSize: 18 }} />
-                  <span>
-                    {new Intl.DateTimeFormat('en-GB', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: '2-digit',
-                    }).format(date)}
-                  </span>
+                  <span>{date}</span>
                 </Typography>
               </div>
               <div />

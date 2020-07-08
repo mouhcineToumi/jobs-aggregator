@@ -4,10 +4,11 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION, LIST_JOBS_DONE } from './constants';
+import { DEFAULT_ACTION, LIST_JOBS_DONE, INCRI_COUNTER } from './constants';
 
 export const initialState = {
   jobs: [],
+  counter: 5,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -18,6 +19,9 @@ const homeReducer = (state = initialState, action) =>
         break;
       case LIST_JOBS_DONE:
         draft.jobs = action.jobs;
+        break;
+      case INCRI_COUNTER:
+        draft.counter += 5;
         break;
     }
   });

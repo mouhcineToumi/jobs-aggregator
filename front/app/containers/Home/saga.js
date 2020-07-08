@@ -6,7 +6,7 @@ import { fetchJobsDoneAction } from './actions';
 
 function* fetchListJobsSaga() {
   try {
-    yield call(callApi, '', get, null, fetchJobsDoneAction);
+    yield call(callApi, 'offers', get, null, fetchJobsDoneAction);
   } catch (e) {
     console.log(e);
   }

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /**
@@ -23,46 +24,13 @@ import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import FilterResults from 'react-filter-search';
-import makeSelectHome, { selectAllJobs } from './selectors';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { selectAllJobs, counter } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { fetchListJobs } from './actions';
-
-const jobstest = [
-  {
-    _id: {
-      $oid: '5efe3bc4cab55066c34d3a95',
-    },
-    url:
-      'https://ma.indeed.com/rc/clk?jk=c78a272c52cc8b76&fccid=dd616958bd9ddc12&vjs=3',
-    id: 'c78a272c52cc8b76_dd616958bd9ddc12',
-    company: '',
-    location: 'Casablanca',
-    date: {
-      $date: '2020-07-02T20:55:48.727Z',
-    },
-    description:
-      "youssef DÉVELOPPEUR WEB \n Casablanca \n Publiée le: 2 Jul-11:29 \n Vue: 28 \n Annonce N°: 8330209\n Nous sommes une société de la distribution des offres et services de téléphonie mobile, travaille en partenariat avec orange et nous sommes à la recherche d'un développeur web à casablanca \nprofil demandébac+2 ou plus en développement informatique \ndéveloppement web php..base de donnée : mysql, pgsql, \nenvoyez votre cv.\n Domaine : Informatique / Multimédia / Internet \n Fonction : Informatique - Développement \n Type de contrat : A discuter \n Nom de la société : FIRST TELECOM \n Salaire : A discuter \n Niveau d'études : Bac plus 2",
-    title: 'DÉveloppeur web',
-  },
-  {
-    _id: {
-      $oid: '5efe3bc4cab55066c34d3a96',
-    },
-    url:
-      'https://ma.indeed.com/rc/clk?jk=da92d2f3a6248d84&fccid=8c086c865fe18da4&vjs=3',
-    id: 'da92d2f3a6248d84_8c086c865fe18da4',
-    company: 'KECHWEB',
-    location: 'Casablanca',
-    date: {
-      $date: '2020-07-02T20:55:48.866Z',
-    },
-    description:
-      'Kechweb est une société de divers travaux informatiques (développement informatique etc...). elle est composée de jeunes spécialistes en informatique dynamiques, persévérants et enthousiastes pour concevoir, développer et réaliser les objectifs des clients. on cherche un développeur web très motivant pour le poste : développeur web maîtrise parfaitement le développement des plugins, thèmes, modules pour cms (wordpress, joomla, prestashop, dolibarr).',
-    title: 'Développeur web',
-  },
-];
+import { fetchListJobs, increCounterAction } from './actions';
 
 const useStyles = makeStyles(theme => ({
   cont: {
@@ -80,6 +48,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: '17px',
     color: 'rgba(0, 0, 0, 0.38)',
   },
+  loading: {
+    margin: 10,
+    marginBottom: 20,
+    color: 'black',
+  },
 }));
 
 export function Home({ fetchJobs, Jobs }) {
@@ -87,36 +60,72 @@ export function Home({ fetchJobs, Jobs }) {
   useInjectSaga({ key: 'home', saga });
   const classes = useStyles();
   const [search, setSearch] = React.useState('');
+  const [hasMore, setHasMore] = React.useState(true);
+  const [wait, setWait] = React.useState(false);
+  const [offers, setOffers] = React.useState([]);
 
   useEffect(() => {
     fetchJobs();
-  }, {});
+  }, []);
+
+  useEffect(() => {
+    setOffers(Jobs.slice(0, 5));
+    setTimeout(() => {
+      setWait(true);
+    }, 1000);
+  }, [Jobs]);
+
+  const fetchMoreData = () => {
+    setTimeout(() => {
+      if (offers.length >= Jobs.length) {
+        setHasMore(false);
+      }
+      setOffers(Jobs.slice(0, offers.length + 5));
+    }, 1500);
+  };
 
   return (
     <>
       <Container className={classes.cont} maxWidth="md">
         <Header search={search} setSearch={setSearch} />
-        <div className={classes.beet}>
-          <Typography
-            align="center"
-            color="textSecondary"
-            className={classes.text}
-          >
-            <span>{jobstest.length} job(s) available</span>
-          </Typography>
-          <Divider />
-        </div>
-        <FilterResults
-          value={search}
-          data={jobstest}
-          renderResults={results => (
-            <div>
-              {results.map(job => (
-                <CardJobs job={job} />
-              ))}
-            </div>
-          )}
-        />
+        {wait && (
+          <FilterResults
+            value={search}
+            data={offers}
+            renderResults={results => (
+              <>
+                <div className={classes.beet}>
+                  <Typography
+                    align="center"
+                    color="textSecondary"
+                    className={classes.text}
+                  >
+                    <span>{results.length} job(s) available</span>
+                  </Typography>
+                  <Divider />
+                </div>
+                <InfiniteScroll
+                  dataLength={results.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={
+                    <div style={{ width: '100%', textAlign: 'center' }}>
+                      <CircularProgress
+                        size={20}
+                        disableShrink
+                        className={classes.loading}
+                      />
+                    </div>
+                  }
+                >
+                  {results.map(job => (
+                    <CardJobs key={job._id} job={job} />
+                  ))}
+                </InfiniteScroll>
+              </>
+            )}
+          />
+        )}
       </Container>
     </>
   );
@@ -129,12 +138,14 @@ Home.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   Jobs: selectAllJobs,
+  counter,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchJobs: fetchListJobs,
+      increCounter: increCounterAction,
     },
     dispatch,
   );

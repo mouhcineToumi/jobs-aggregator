@@ -1,6 +1,6 @@
 /* eslint-disable spaced-comment */
 const request = (url, options) => {
-  const response = fetch(`https://jsonplaceholder.typicode.com/${url}`, {
+  const response = fetch(`https://jobs-aggregator-backend.herokuapp.com/${url}`, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-type': 'application/json',
