@@ -18,11 +18,12 @@ function* callApi(url, requestFunction, requestBody, callbackAction) {
       response = yield requestFunction(url, {
         body: requestBody,
       });
+      
     } else {
       response = yield requestFunction(url);
     }
     if (response && response !== null && response !== undefined) {
-      const formattedData = response.body;
+      const formattedData = response;
       if (callbackAction) {
         yield put(callbackAction(formattedData));
       }
