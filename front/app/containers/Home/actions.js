@@ -9,6 +9,8 @@ import {
   LIST_JOBS,
   LIST_JOBS_DONE,
   INCRI_COUNTER,
+  LIST_JOBS_LOCALISATION,
+  LIST_JOBS_LOCALISATION_DONE,
 } from './constants';
 
 export function defaultAction() {
@@ -25,6 +27,18 @@ export function fetchJobsDoneAction(jobs) {
   return {
     type: LIST_JOBS_DONE,
     jobs,
+  };
+}
+
+export function fetchListLocalisation() {
+  return {
+    type: LIST_JOBS_LOCALISATION,
+  };
+}
+export function fetchLocalisationDoneAction(localisation) {
+  return {
+    type: LIST_JOBS_LOCALISATION_DONE,
+    localisation,
   };
 }
 

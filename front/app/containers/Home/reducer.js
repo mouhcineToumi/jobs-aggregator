@@ -4,10 +4,16 @@
  *
  */
 import produce from 'immer';
-import { DEFAULT_ACTION, LIST_JOBS_DONE, INCRI_COUNTER } from './constants';
+import {
+  DEFAULT_ACTION,
+  LIST_JOBS_DONE,
+  INCRI_COUNTER,
+  LIST_JOBS_LOCALISATION_DONE,
+} from './constants';
 
 export const initialState = {
   jobs: [],
+  localisation: [],
   counter: 5,
 };
 
@@ -19,6 +25,9 @@ const homeReducer = (state = initialState, action) =>
         break;
       case LIST_JOBS_DONE:
         draft.jobs = action.jobs;
+        break;
+      case LIST_JOBS_LOCALISATION_DONE:
+        draft.localisation = action.localisation;
         break;
       case INCRI_COUNTER:
         draft.counter += 5;

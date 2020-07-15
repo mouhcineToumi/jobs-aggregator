@@ -12,8 +12,13 @@ const selectAllJobs = createSelector(
   substate => substate.jobs,
 );
 
+const selectAllLocations = createSelector(
+  selectHomeDomain,
+  substate => substate.localisation,
+);
+
 const counter = createSelector(
   selectHomeDomain,
   substate => substate.counter,
 );
-export { selectAllJobs, counter };
+export { selectAllJobs, counter, selectAllLocations };

@@ -31,12 +31,13 @@ import DirectionsIcon from '@material-ui/icons/Directions';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function Header({ search, setSearch }) {
+function Header({ search, setSearch, location, setLocation, loc }) {
   const ListProfession = ['Informatique', 'marketing'];
   const useStyles = makeStyles(theme => ({
     Filter: {
       margin: 10,
       width: '30%',
+      height: '80',
       '@media(max-width: 700px)': {
         width: '45%',
       },
@@ -90,7 +91,6 @@ function Header({ search, setSearch }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [ShowFilter, setShowFilter] = React.useState(false);
-  const [location, setLocation] = React.useState('');
 
   const handleChange = event => {
     setSearch(event.target.value);
@@ -167,14 +167,20 @@ function Header({ search, setSearch }) {
             <p className={classes.FilterTitle}>Mes Filters :</p>
           </div>
           <div className={classes.Divfilter}>
-            <TextField
-              className={classes.Filter}
-              id="outlined-basic"
-              onChange={handleChange2}
-              label="Location"
-              variant="outlined"
-              size="small"
-            />
+            <FormControl className={classes.Filter}>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                value={location}
+                id="outlined-basic"
+                onChange={handleChange2}
+                label="Location"
+                size="small"
+              >
+                {loc.map(l => (
+                  <MenuItem value={l}>{l}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
         </div>
       )}
@@ -184,7 +190,10 @@ function Header({ search, setSearch }) {
 
 Header.propTypes = {
   search: PropTypes.string,
-  setSearch: PropTypes.string,
+  setSearch: PropTypes.func,
+  location: PropTypes.string,
+  setLocation: PropTypes.func,
+  loc: PropTypes.array,
 };
 
 export default memo(Header);
