@@ -6,10 +6,20 @@
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 import pymongo
+import dateparser
+from googletrans import Translator
 
 class IndeedcrawlerPipeline:
+
+    def __init__(self):
+        self.translator = Translator()
+
     def process_item(self, item, spider):
+        if spider.name == 'indeed':
+           item['date'] = dateparser.parse(self.translator.translate(item['date'].lower().replace('publiée ', ' '), dest='en').text)
         return item
+
+
 
 
 
