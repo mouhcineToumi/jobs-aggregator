@@ -74,6 +74,17 @@ db.initialize("jobs-aggregator", "offers", function(dbCollection) { // successCa
     }
 
 
+
+    ///////////////////////////////////////////////////// TOOLS //////////////////////////////////////////////////////////////////////////////////////////
+
+    function getLocations(location) {
+        return new Promise(resolve => {
+            dbCollection.distinct('location')
+                .then(locations =>{ resolve(locations)})
+
+        })}
+
+
 ///////////////////////////////////////////////////////////////Exports///////////////////////////////////////////////////////////////////////////////////
 
     exports.getOffers = getOffers;
@@ -83,6 +94,7 @@ db.initialize("jobs-aggregator", "offers", function(dbCollection) { // successCa
     exports.getOffersByTitle = getOffersByTitle;
     exports.getOffersByType = getOffersByType;
     exports.getOffersByDomain = getOffersByDomain;
+    exports.getLocations = getLocations;
 
     }, function(err) { // failureCallback
     throw (err);
