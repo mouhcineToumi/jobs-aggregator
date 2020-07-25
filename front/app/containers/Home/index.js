@@ -32,7 +32,6 @@ import saga from './saga';
 import messages from './messages';
 import {
   fetchListJobs,
-  increCounterAction,
   fetchListLocalisation,
 } from './actions';
 
@@ -58,8 +57,6 @@ const useStyles = makeStyles(theme => ({
     color: 'black',
   },
 }));
-
-const loc = ['Casablanca', 'Rabat'];
 
 export function Home({ fetchJobs, Jobs, Locations, fetchLocations }) {
   useInjectReducer({ key: 'home', reducer });
@@ -90,6 +87,7 @@ export function Home({ fetchJobs, Jobs, Locations, fetchLocations }) {
     setJobsF(joboff);
   };
   useEffect(() => {
+    fetchLocations();
     fetchJobs();
   }, []);
 
@@ -145,7 +143,7 @@ export function Home({ fetchJobs, Jobs, Locations, fetchLocations }) {
           setSearch={setSearch}
           location={location}
           setLocation={setLocation}
-          loc={loc}
+          loc={Locations}
         />
         {wait && location === '' && (
           <FilterResults
@@ -232,7 +230,6 @@ Home.propTypes = {
 const mapStateToProps = createStructuredSelector({
   Jobs: selectAllJobs,
   Locations: selectAllLocations,
-  counter,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -240,7 +237,6 @@ const mapDispatchToProps = dispatch =>
     {
       fetchJobs: fetchListJobs,
       fetchLocations: fetchListLocalisation,
-      increCounter: increCounterAction,
     },
     dispatch,
   );

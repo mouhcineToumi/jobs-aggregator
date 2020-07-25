@@ -17,7 +17,7 @@ function* watchFetchListJobs() {
 
 function* fetchListLocalisationSaga() {
   try {
-    yield call(callApi, 'location', get, null, fetchLocalisationDoneAction);
+    yield call(callApi, 'cities', get, null, fetchLocalisationDoneAction);
   } catch (e) {
     console.log(e);
   }
