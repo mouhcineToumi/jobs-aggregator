@@ -168,7 +168,7 @@ function Header({ search, setSearch, location, setLocation, loc }) {
           </div>
           <div className={classes.Divfilter}>
             <FormControl className={classes.Filter}>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <InputLabel id="demo-simple-select-label">Location</InputLabel>
               <Select
                 value={location}
                 id="outlined-basic"
